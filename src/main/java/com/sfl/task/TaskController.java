@@ -1,7 +1,7 @@
-package com.sfl.todo;
+package com.sfl.task;
 
-import com.sfl.model.Todo;
-import com.sfl.todo.service.TodoService;
+import com.sfl.model.Task;
+import com.sfl.task.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,10 +18,10 @@ import java.util.Date;
 
 @Controller
 @SessionAttributes("name")
-public class TodoController {
+public class TaskController {
 
     @Autowired
-    private TodoService service;
+    private TaskService taskService;
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
@@ -30,54 +30,53 @@ public class TodoController {
                 dateFormat, false));
     }
 
-    @RequestMapping(value = {"/", "/list-todos"}, method = RequestMethod.GET)
-    public String showTodosList(ModelMap model) {
-        model.addAttribute("todos", service.retrieveTodos(getPrincipal()));
-        return "list-todos";
+    @RequestMapping(value = {"/", "/list-tasks"}, method = RequestMethod.GET)
+    public String showTasksList(ModelMap model) {
+        model.addAttribute("tasks", taskService.retrieveTasks(getPrincipal()));
+        return "list-tasks";
     }
 
-    @RequestMapping(value = "/add-todo", method = RequestMethod.GET)
-    public String showAddTodoPage(ModelMap model) {
-        model.addAttribute("todo", new Todo());
-        return "todo";
+    @RequestMapping(value = "/add-task", method = RequestMethod.GET)
+    public String showAddTaskPage(ModelMap model) {
+        model.addAttribute("task", new Task());
+        return "task";
     }
 
-    @RequestMapping(value = "/add-todo", method = RequestMethod.POST)
-    public String addTodo(ModelMap model, @Valid Todo todo, BindingResult result) {
+    @RequestMapping(value = "/add-task", method = RequestMethod.POST)
+    public String addTask(ModelMap model, @Valid Task task, BindingResult result) {
 
         if (result.hasErrors())
-            return "todo";
+            return "task";
 
-        service.addTodo(getPrincipal(), todo.getDesc(), todo.getTargetDate(),
-                false);
+        taskService.addTask(getPrincipal(), task.getDesc(), task.getTargetDate(), false);
         model.clear();// to prevent request parameter "name" to be passed
-        return "redirect:/list-todos";
+        return "redirect:/list-tasks";
     }
 
-    @RequestMapping(value = "/update-todo", method = RequestMethod.GET)
-    public String showUpdateTodoPage(ModelMap model, @RequestParam int id) {
-        model.addAttribute("todo", service.retrieveTodo(id));
-        return "todo";
+    @RequestMapping(value = "/update-task", method = RequestMethod.GET)
+    public String showUpdateTaskPage(ModelMap model, @RequestParam int id) {
+        model.addAttribute("task", taskService.retrieveTask(id));
+        return "task";
     }
 
-    @RequestMapping(value = "/update-todo", method = RequestMethod.POST)
-    public String updateTodo(ModelMap model, @Valid Todo todo,
+    @RequestMapping(value = "/update-task", method = RequestMethod.POST)
+    public String updateTask(ModelMap model, @Valid Task task,
                              BindingResult result) {
         if (result.hasErrors())
-            return "todo";
+            return "task";
 
-        todo.setUser(getPrincipal());
-        service.updateTodo(todo);
+        task.setUser(getPrincipal());
+        taskService.updateTask(task);
 
         model.clear();// to prevent request parameter "name" to be passed
-        return "redirect:/list-todos";
+        return "redirect:/list-tasks";
     }
 
-    @RequestMapping(value = "/delete-todo", method = RequestMethod.GET)
-    public String deleteTodo(@RequestParam int id) {
-        service.deleteTodo(id);
+    @RequestMapping(value = "/delete-task", method = RequestMethod.GET)
+    public String deleteTask(@RequestParam int id) {
+        taskService.deleteTask(id);
 
-        return "redirect:/list-todos";
+        return "redirect:/list-tasks";
     }
 
     private String getPrincipal() {

@@ -20,7 +20,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers("/login").permitAll()
-                .antMatchers("/", "/*todo*/**").access("hasRole('USER')").and()
+                .antMatchers("/", "/*task*/**").access("hasRole('USER')").and()
                 .formLogin().and().exceptionHandling()
                 .accessDeniedPage("/access-denied");
     }

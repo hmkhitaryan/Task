@@ -3,7 +3,7 @@
 
 <div class="container">
     <table class="table table-striped">
-        <caption>Your Todos are</caption>
+        <caption>Your Tasks are</caption>
         <thead>
         <tr>
             <th>Description</th>
@@ -13,23 +13,23 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${todos}" var="todo">
+        <c:forEach items="${tasks}" var="task">
             <tr>
-                <td>${todo.desc}</td>
+                <td>${task.desc}</td>
                 <td><fmt:formatDate pattern="dd/MM/yyyy"
-                                    value="${todo.targetDate}"/></td>
-                <td>${todo.done}</td>
+                                    value="${task.targetDate}"/></td>
+                <td>${task.done}</td>
                 <td><a type="button" class="btn btn-primary"
-                       href="/update-todo?id=${todo.id}">Edit</a> <a type="button"
+                       href="/update-task?id=${task.id}">Edit</a> <a type="button"
                                                                      class="btn btn-warning"
-                                                                     href="/delete-todo?id=${todo.id}">Delete</a>
+                                                                     href="/delete-task?id=${task.id}">Delete</a>
                 </td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
     <div>
-        <a type="button" class="btn btn-success" href="/add-todo">Add</a>
+        <a type="button" class="btn btn-success" href="/add-task">Add</a>
     </div>
 </div>
 <%@ include file="common/footer.jspf" %>

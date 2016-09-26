@@ -3,7 +3,7 @@ package com.sfl.model;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
-public class Todo {
+public class Task {
     private int id;
 
     private String user;
@@ -14,12 +14,11 @@ public class Todo {
     private Date targetDate;
     private boolean isDone;
 
-    public Todo() {
+    public Task() {
         super();
     }
 
-    public Todo(int id, String user, String desc, Date targetDate,
-                boolean isDone) {
+    public Task(int id, String user, String desc, Date targetDate, boolean isDone) {
         super();
         this.id = id;
         this.user = user;
@@ -84,7 +83,7 @@ public class Todo {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Todo other = (Todo) obj;
+        Task other = (Task) obj;
         if (id != other.id)
             return false;
         return true;
@@ -93,7 +92,7 @@ public class Todo {
     @Override
     public String toString() {
         return String.format(
-                "Todo [id=%s, user=%s, desc=%s, targetDate=%s, isDone=%s]", id,
+                "Task [id=%s, user=%s, desc=%s, targetDate=%s, isDone=%s]", id,
                 user, desc, targetDate, isDone);
     }
 

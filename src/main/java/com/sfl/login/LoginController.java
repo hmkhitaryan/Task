@@ -21,14 +21,13 @@ public class LoginController {
     private LoginService loginService;
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public String logoutPage(HttpServletRequest request,
-                             HttpServletResponse response) {
-        Authentication auth = SecurityContextHolder.getContext()
-                .getAuthentication();
+    public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
         if (auth != null) {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
-        return "redirect:/list-todos";
+        return "redirect:/list-tasks";
     }
 
     @RequestMapping(value = "/access-denied", method = RequestMethod.GET)
